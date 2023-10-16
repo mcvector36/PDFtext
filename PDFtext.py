@@ -1,18 +1,21 @@
-# PDFtext (v1.0)
+# PDFtext (v1.1)
 # Author: MC Vector 36 (Mihai-Cristian Constantin)
 # @mcvector36
 
-import PyPDF2
+# Info:
+#           This program identifies the text characters from a 'PDF' file
+#       in the current location and transposes the identified characters
+#       into a text file with the 'TXT' extension.
+
+import fitz  # PyMuPDF
 import os
-import re
 
 def extrage_text_din_pdf(pdf_path):
     text = ""
-    with open(pdf_path, "rb") as pdf_file:
-        pdf_reader = PyPDF2.PdfReader(pdf_file)
-        for page_num in range(len(pdf_reader.pages)):
-            page = pdf_reader.pages[page_num]
-            text += page.extract_text()
+    doc = fitz.open(pdf_path)
+    for page_num in range(len(doc)):
+        page = doc[page_num]
+        text += page.get_text()
 
     return text
 
@@ -25,7 +28,7 @@ def main():
         print(f"Fisierul {pdf_filename} nu există în directorul curent.")
         return
 
-    # Extrage textul din PDF
+    # Extrage textul din PDF, inclusiv din imagini
     text = extrage_text_din_pdf(pdf_filename)
 
     # Obține numele fișierului fără extensie
@@ -40,3 +43,4 @@ def main():
 
 if __name__ == "__main__":
     main()
+
