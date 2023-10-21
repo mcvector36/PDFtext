@@ -1,4 +1,4 @@
-# PDFtext
+# PDF to text
 Extract the text from a pdf file. 🖹 ✍
 
   This program identifies the text characters from a 'PDF' file
